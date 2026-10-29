@@ -16,7 +16,7 @@
 #include <net/genetlink.h>
 #include <linux/moduleparam.h>
 #include <linux/mutex.h>
-// security/selinux/include/security.h
+// security/selinux/include/security.h !
 #include <security.h>
 #include <ss/context.h>
 #include <ss/services.h>
