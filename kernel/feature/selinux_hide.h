@@ -259,8 +259,14 @@ check_rule:; // double strstr
 
 static noinline void do_useless_alloc(void)
 {
-	volatile void *dummy __offstack(4096);
-	memset_explicit(dummy, 0x67, 4096);
+	volatile uint8_t s[4] __attribute__((uninitialized));
+	volatile int n = (s[0] ?: 128) + (s[1] ?: 64) + (s[2] ?: 32) + (s[3] ?: 16);
+	volatile char *stack = __builtin_alloca(n);
+	volatile char *heap __zoffstack(4096 + n);
+
+	memset_explicit(heap, s[0], 4096 + n);
+	memset_explicit(stack, s[1], n);
 }
+
 
 #endif
